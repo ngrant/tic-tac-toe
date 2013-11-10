@@ -47,36 +47,68 @@ char evaluate() {
     if (board[2] == board[4] && board[2] == board[6]) return board[2];
 
     return '_';
+}
 
+void moveprompt(char letter) {
+    while (true) {
+        int usermove;
+        std::cout << "Your move(" << letter << "): " << std::endl;
+        std::istringstream iss(getline());
+        iss >> usermove >> std::ws;
+        if (usermove <= 9) {
+            if (board[usermove - 1] == '_') {
+                board[usermove-1] = letter;
+                break;
+            }
+        }
+    }
 }
 
 void printboard() {
     std::cout << "Board: " << std::endl;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            std::cout << board[i * 3 + j];
+            char val = board[i * 3 + j];
+            if (val != '_') 
+                std::cout << val; 
+            else 
+                std::cout << (i * 3 + j + 1);
         }
         std::cout << std::endl;
     }
     std::cout << std::endl;
 }
 
-int newgame() {
+char printresult() {
+    char result = evaluate();
+    std::cout << "Result: " << result << std::endl;
+    if (result != '_') std::cout << result << " wins!" << std::endl;
+    return result;
+}
+
+void cpumove() {
+    for (int i = 0; i < 9; i++) {
+        if (board[i] == '_') {
+            board[i] = 'o';
+            break;
+        }
+    }
+}
+
+int newgame(int players) {
     resetboard();
     printboard();
     char result = '_';
-    int usermove;
     while (result == '_') {
-        std::cout << "Your move: " << std::endl;
-        std::istringstream iss(getline());
-        iss >> usermove >> std::ws;
-        if (usermove <= 9) {
-            if (board[usermove - 1] == '_') {
-                board[usermove-1] = 'x';
-            }
+        moveprompt('x');
+        printboard();
+        result = printresult();
+        if (result != '_') break;
+        if (players == 1) cpumove();
+        else {
+            moveprompt('o');
         }
-        result = evaluate();
-        std::cout << "Result: " << result << std::endl;
+        result = printresult();
         printboard();
     }
     if (result == 'x') return 1;
@@ -86,14 +118,15 @@ int newgame() {
 
 int main(int argc, char *argv[]) {
     char choice = 'Y';
+    int players = 1;
     while (choice == 'Y' || choice == 'y') {
-        newgame();
-        std::cout << "Play again?" << std::endl;
+        std::cout << "Players? [" << players << "]";
         std::istringstream iss(getline());
+        iss >> players >> std::ws;
+        newgame(players);
+        std::cout << "Play again? [" << choice << "]";
+        iss.str(getline());
         iss >> choice >> std::ws;
-        if (iss.fail() || !iss.eof()) {
-            std::cout << "An error occurred." <<std::endl;
-        }
     }
     return 0;
 }
