@@ -15,6 +15,14 @@ std::string getline() {
     return str;
 }
 
+template <typename T>
+T get() {
+    T var;
+    std::istringstream iss(getline());
+    iss >> var >> std::ws;
+    return var;
+}
+
 char check_horizontal(int start) {
 
     if ((start % 3) != 0) return '_';
@@ -51,13 +59,11 @@ char evaluate() {
 
 void moveprompt(char letter) {
     while (true) {
-        int usermove;
         std::cout << "Your move(" << letter << "): " << std::endl;
-        std::istringstream iss(getline());
-        iss >> usermove >> std::ws;
+        auto usermove = get<int>();
         if (usermove <= 9) {
             if (board[usermove - 1] == '_') {
-                board[usermove-1] = letter;
+                board[usermove - 1] = letter;
                 break;
             }
         }
@@ -121,12 +127,10 @@ int main(int argc, char *argv[]) {
     int players = 1;
     while (choice == 'Y' || choice == 'y') {
         std::cout << "Players? [" << players << "]";
-        std::istringstream iss(getline());
-        iss >> players >> std::ws;
+        players = get<int>();
         newgame(players);
         std::cout << "Play again? [" << choice << "]";
-        iss.str(getline());
-        iss >> choice >> std::ws;
+        choice = get<char>();
     }
     return 0;
 }
