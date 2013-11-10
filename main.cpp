@@ -16,8 +16,8 @@ std::string getline() {
 }
 
 template <typename T>
-T get() {
-    T var;
+T get(T initial_value) {
+    T var = initial_value;
     std::istringstream iss(getline());
     iss >> var >> std::ws;
     return var;
@@ -60,7 +60,7 @@ char evaluate() {
 void moveprompt(char letter) {
     while (true) {
         std::cout << "Your move(" << letter << "): " << std::endl;
-        auto usermove = get<int>();
+        auto usermove = get<int>(0);
         if (usermove <= 9) {
             if (board[usermove - 1] == '_') {
                 board[usermove - 1] = letter;
@@ -87,7 +87,7 @@ void printboard() {
 
 char printresult() {
     char result = evaluate();
-    std::cout << "Result: " << result << std::endl;
+    //std::cout << "Result: " << result << std::endl;
     if (result != '_') std::cout << result << " wins!" << std::endl;
     return result;
 }
@@ -127,10 +127,10 @@ int main(int argc, char *argv[]) {
     int players = 1;
     while (choice == 'Y' || choice == 'y') {
         std::cout << "Players? [" << players << "]";
-        players = get<int>();
+        players = get<int>(players);
         newgame(players);
         std::cout << "Play again? [" << choice << "]";
-        choice = get<char>();
+        choice = get<char>(choice);
     }
     return 0;
 }
