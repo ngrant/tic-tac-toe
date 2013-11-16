@@ -6,8 +6,8 @@ TARGET = ttt
 
 all: $(TARGET)
 
-$(TARGET): $(TARGET).cpp
-	$(CC) $(CFLAGS) -o $(TARGET) main.cpp
+$(TARGET): 
+	$(CC) $(CFLAGS) -o $(TARGET) src/main.cpp
 
 clean:
 	$(RM) $(TARGET)
