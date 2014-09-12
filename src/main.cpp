@@ -85,10 +85,22 @@ void printboard() {
     std::cout << std::endl;
 }
 
+bool availablemove() {
+    for (int i = 0; i < 9; i++) {
+        if (board[i] == '_') return true;
+    }
+    return false;
+}
+
 char printresult() {
     char result = evaluate();
+    auto moves = availablemove();
     //std::cout << "Result: " << result << std::endl;
     if (result != '_') std::cout << result << " wins!" << std::endl;
+    else if (!moves) { 
+        std::cout << "it's a tie!" << std::endl;
+        return '=';
+    }
     return result;
 }
 
