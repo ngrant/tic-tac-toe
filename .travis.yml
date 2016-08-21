@@ -1,0 +1,16 @@
+language: cpp
+compiler:
+    - gcc
+    - clang
+os:
+    - linux
+    - osx
+script: make
+
+branches:
+    only:
+        - master
+
+env:
+  global:
+      - LANG="en_US.UTF-8"
