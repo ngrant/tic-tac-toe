@@ -6,4 +6,5 @@ ttt
 
 config.h
 config.status
+Makefile
 

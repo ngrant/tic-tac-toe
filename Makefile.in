@@ -2,6 +2,8 @@ TARGET = ttt
 
 all: $(TARGET)
 
+test: ;
+
 $(TARGET): 
 	$(CXX) $(CXXFLAGS) -o $(TARGET) src/main.cpp
 
