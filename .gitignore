@@ -2,9 +2,9 @@ main
 ttt
 *.dSYM
 *.cache
+*.log
 
 config.h
 config.status
-config.log
 configure
 
