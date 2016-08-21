@@ -1,4 +1,10 @@
 main
 ttt
 *.dSYM
+*.cache
+
+config.h
+config.status
+config.log
+configure
 
